@@ -819,6 +819,10 @@ public:
         const std::string& tool_material_preset_id,
         size_t slot_index) const;
 
+    /// Stores the currently selected printer preset in the app config, so that new projects
+    /// start with it (see initialize_config_container_with_default).
+    void remember_selected_printer_preset();
+
     void discard_selected_printer_preset_changes();
     void discard_selected_print_preset_changes();
     void discard_selected_tool_print_preset_changes(size_t tool_index);

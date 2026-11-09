@@ -218,6 +218,8 @@ bool PhysicalPrinterInteractor::select_uuid(const std::string& uuid)
         return false;
     }
     m_explicit_selection = true;
+    // Picking a physical printer changes the printer preset as well; remember it for new projects.
+    m_preset_interactor.remember_selected_printer_preset();
 
     this->invoke_listeners<IPhysicalPrinterChangedListener>(
         [](auto* listener) { listener->on_physical_printer_picked(); }

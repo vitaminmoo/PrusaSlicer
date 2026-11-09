@@ -2347,15 +2347,19 @@ void PresetInteractor::select_printer_preset(
 
     if (user) {
         m_backup_store.invalidate_backup(m_selected_project_id);
+        remember_selected_printer_preset();
+    }
+}
 
-        auto& services = Platform::PlatformServices::instance();
-        if (services.has_app_config_provider()) {
-            const auto& hw_config = get_printer_config(printer_hw_config_id).first.get();
-            services.app_config_provider().set_last_used_printer_preset(
-                stable_hw_config_key(hw_config),
-                printer_preset_id
-            );
-        }
+void PresetInteractor::remember_selected_printer_preset()
+{
+    auto& services = Platform::PlatformServices::instance();
+    if (services.has_app_config_provider()) {
+        const auto& selected = selected_printer_preset();
+        services.app_config_provider().set_last_used_printer_preset(
+            stable_hw_config_key(selected.hw_config),
+            selected.printer.id
+        );
     }
 }
 
