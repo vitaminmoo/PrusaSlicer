@@ -3,6 +3,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include <string>
+#include <utility>
 
 namespace Slic3r::Biz::Platform {
 
@@ -16,6 +17,11 @@ public:
 
   virtual std::string last_used_export_destination() const = 0;
   virtual void set_last_used_export_destination(const std::string& destination) = 0;
+
+  /// Returns {hw_config_key, preset_id} of the printer preset selected last time, or empty strings.
+  /// The hw config key identifies the printer model across restarts (its runtime id does not).
+  virtual std::pair<std::string, std::string> last_used_printer_preset() const = 0;
+  virtual void set_last_used_printer_preset(const std::string& hw_config_key, const std::string& preset_id) = 0;
 
   virtual bool get_show_step_import_parameters() const = 0;
   virtual void set_show_step_import_parameters(bool show) = 0;
